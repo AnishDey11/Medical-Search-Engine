@@ -1,0 +1,55 @@
+# Virtual environment
+venv/
+.venv/
+env/
+ENV/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# IDE
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Environment files
+.env
+.env.*
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+
+# Generated files
+page_rank.json
+
+# Hashmap generation/helper scripts
+pages.py
+forward_hash.py
+backward_hash.py
+pageconn.py
+
+# Local test/experiment scripts
+try_pgrank.py
+
+# Test files
+test_*.py
+*_test.py
+
+# Coverage
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3

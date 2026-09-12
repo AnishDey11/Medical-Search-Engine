@@ -1,0 +1,1 @@
+Medical AI research uses machine learning and medical imaging to improve disease diagnosis. AI systems can analyze data from diabetes, cancer, cardiovascular disease, and infectious diseases.

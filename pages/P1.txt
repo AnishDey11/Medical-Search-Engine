@@ -1,0 +1,1 @@
+Diabetes research focuses on blood glucose control, insulin resistance, and prevention of diabetes complications. Machine learning can help predict diabetes risk using medical data.

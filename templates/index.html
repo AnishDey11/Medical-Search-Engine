@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Medical Research Search Engine</title>
+
+<style>
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f5f6f8;
+}
+
+.header {
+    background: white;
+    padding: 25px;
+    border-bottom: 1px solid #ddd;
+}
+
+.header h1 {
+    text-align: center;
+    margin: 0;
+}
+
+.header p {
+    text-align: center;
+    color: #666;
+}
+
+.search-area {
+    text-align: center;
+    padding: 30px;
+}
+
+.search-box {
+    width: 550px;
+    max-width: 65%;
+    padding: 13px;
+    font-size: 16px;
+    border: 1px solid #aaa;
+    border-radius: 5px;
+}
+
+.search-button,
+.analysis-button {
+    padding: 13px 22px;
+    margin-left: 8px;
+    border: none;
+    border-radius: 5px;
+    background: #222;
+    color: white;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.analysis-button {
+    display: none;
+    background: #444;
+}
+
+.container {
+    width: 850px;
+    max-width: 90%;
+    margin: auto;
+}
+
+.result {
+    background: white;
+    padding: 20px;
+    margin-bottom: 18px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+}
+
+.result h2 {
+    margin: 0;
+}
+
+.result h2 a {
+    text-decoration: none;
+}
+
+.result h2 a:hover {
+    text-decoration: underline;
+}
+
+.overview {
+    margin-top: 10px;
+    color: #555;
+    line-height: 1.5;
+}
+
+.message {
+    background: white;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="header">
+
+    <h1>
+        Medical Research Search Engine
+    </h1>
+
+    <p>
+        Search medical research documents
+    </p>
+
+</div>
+
+
+<div class="search-area">
+
+    <input
+        type="text"
+        id="query"
+        class="search-box"
+        placeholder="Enter medical topic..."
+    >
+
+    <button
+        class="search-button"
+        onclick="searchPages()"
+    >
+        Search
+    </button>
+
+    <button
+        id="analysisButton"
+        class="analysis-button"
+        onclick="openAnalysis()"
+    >
+        Analysis
+    </button>
+
+</div>
+
+
+<div
+    id="results"
+    class="container"
+></div>
+
+
+<script>
+
+let searchCompleted = false;
+
+
+async function searchPages() {
+
+    const query =
+        document
+        .getElementById("query")
+        .value
+        .trim();
+
+
+    if (!query) {
+
+        alert("Please enter a search query.");
+
+        return;
+    }
+
+
+    const response =
+        await fetch(
+            "/search?q=" +
+            encodeURIComponent(query)
+        );
+
+
+    const results =
+        await response.json();
+
+
+    const container =
+        document.getElementById("results");
+
+
+    const analysisButton =
+        document.getElementById(
+            "analysisButton"
+        );
+
+
+    container.innerHTML = "";
+
+
+    const filteredResults =
+        results.filter(
+            result =>
+            result.final_score > 0
+        );
+
+
+    if (filteredResults.length === 0) {
+
+        analysisButton.style.display = "none";
+
+        searchCompleted = false;
+
+        container.innerHTML = `
+            <div class="message">
+                No relevant documents found.
+            </div>
+        `;
+
+        return;
+    }
+
+
+    searchCompleted = true;
+
+    localStorage.setItem(
+        "searchQuery",
+        query
+    );
+
+
+    analysisButton.style.display =
+        "inline-block";
+
+
+    filteredResults.forEach(
+        result => {
+
+            container.innerHTML += `
+
+                <div class="result">
+
+                    <h2>
+
+                        <a
+                            href="/page/${result.page}"
+                        >
+                            ${result.page}
+                        </a>
+
+                    </h2>
+
+                    <div class="overview">
+
+                        ${result.overview}
+
+                    </div>
+
+                </div>
+
+            `;
+
+        }
+    );
+}
+
+
+function openAnalysis() {
+
+    if (!searchCompleted) {
+        return;
+    }
+
+    window.location.href = "/analysis";
+}
+
+
+document
+    .getElementById("query")
+    .addEventListener(
+        "keypress",
+        function(event) {
+
+            if (event.key === "Enter") {
+                searchPages();
+            }
+
+        }
+    );
+
+</script>
+
+</body>
+
+</html>
+
+
+

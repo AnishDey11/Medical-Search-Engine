@@ -1,0 +1,227 @@
+{
+    "diabetes": [
+        "P1",
+        "P5"
+    ],
+    "research": [
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "P5"
+    ],
+    "focuses": [
+        "P1",
+        "P3"
+    ],
+    "on": [
+        "P1",
+        "P3"
+    ],
+    "blood": [
+        "P1",
+        "P2"
+    ],
+    "glucose": [
+        "P1"
+    ],
+    "control": [
+        "P1"
+    ],
+    "insulin": [
+        "P1"
+    ],
+    "resistance": [
+        "P1"
+    ],
+    "and": [
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "P5"
+    ],
+    "prevention": [
+        "P1",
+        "P3"
+    ],
+    "of": [
+        "P1"
+    ],
+    "complications": [
+        "P1"
+    ],
+    "machine": [
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "P5"
+    ],
+    "learning": [
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "P5"
+    ],
+    "can": [
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "P5"
+    ],
+    "help": [
+        "P1",
+        "P3"
+    ],
+    "predict": [
+        "P1",
+        "P2",
+        "P4"
+    ],
+    "risk": [
+        "P1",
+        "P4"
+    ],
+    "using": [
+        "P1"
+    ],
+    "medical": [
+        "P1",
+        "P3",
+        "P5"
+    ],
+    "data": [
+        "P1",
+        "P2",
+        "P4",
+        "P5"
+    ],
+    "cardiovascular": [
+        "P2",
+        "P5"
+    ],
+    "disease": [
+        "P2",
+        "P4",
+        "P5"
+    ],
+    "studies": [
+        "P2",
+        "P4"
+    ],
+    "heart": [
+        "P2"
+    ],
+    "high": [
+        "P2"
+    ],
+    "pressure": [
+        "P2"
+    ],
+    "stroke": [
+        "P2"
+    ],
+    "analyze": [
+        "P2",
+        "P4",
+        "P5"
+    ],
+    "patient": [
+        "P2"
+    ],
+    "to": [
+        "P2",
+        "P4",
+        "P5"
+    ],
+    "improve": [
+        "P2",
+        "P5"
+    ],
+    "early": [
+        "P2",
+        "P3"
+    ],
+    "diagnosis": [
+        "P2",
+        "P3",
+        "P4",
+        "P5"
+    ],
+    "cancer": [
+        "P3",
+        "P5"
+    ],
+    "detection": [
+        "P3"
+    ],
+    "treatment": [
+        "P3"
+    ],
+    "imaging": [
+        "P3",
+        "P5"
+    ],
+    "doctors": [
+        "P3"
+    ],
+    "identify": [
+        "P3"
+    ],
+    "at": [
+        "P3"
+    ],
+    "an": [
+        "P3"
+    ],
+    "stage": [
+        "P3"
+    ],
+    "infectious": [
+        "P4",
+        "P5"
+    ],
+    "diseases": [
+        "P4",
+        "P5"
+    ],
+    "such": [
+        "P4"
+    ],
+    "as": [
+        "P4"
+    ],
+    "tuberculosis": [
+        "P4"
+    ],
+    "malaria": [
+        "P4"
+    ],
+    "viral": [
+        "P4"
+    ],
+    "infections": [
+        "P4"
+    ],
+    "clinical": [
+        "P4"
+    ],
+    "support": [
+        "P4"
+    ],
+    "ai": [
+        "P5"
+    ],
+    "uses": [
+        "P5"
+    ],
+    "systems": [
+        "P5"
+    ],
+    "from": [
+        "P5"
+    ]
+}

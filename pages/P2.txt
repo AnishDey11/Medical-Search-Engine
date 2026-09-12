@@ -1,0 +1,1 @@
+Cardiovascular disease research studies heart disease, high blood pressure, and stroke. Machine learning can analyze patient data to predict cardiovascular disease and improve early diagnosis.

@@ -1,0 +1,1 @@
+Infectious disease research studies diseases such as tuberculosis, malaria, and viral infections. Machine learning can analyze clinical data to predict disease risk and support diagnosis.

@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Search Analysis</title>
+
+<style>
+
+body {
+    margin: 30px;
+    font-family: Arial, sans-serif;
+    background: #f5f6f8;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.back-button {
+    padding: 10px 18px;
+    background: #222;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+}
+
+.section {
+    background: white;
+    padding: 20px;
+    margin-top: 25px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+th,
+td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+
+th {
+    background: #222;
+    color: white;
+}
+
+.formula {
+    background: #f1f1f1;
+    padding: 12px;
+    margin-top: 10px;
+    font-family: "Courier New", monospace;
+}
+
+#graph {
+    width: 100%;
+    height: 500px;
+    background: white;
+    border: 1px solid #ddd;
+}
+
+.node {
+    fill: white;
+    stroke: #222;
+    stroke-width: 2;
+}
+
+.node-text {
+    font-size: 16px;
+    text-anchor: middle;
+    dominant-baseline: middle;
+}
+
+.edge {
+    stroke: #555;
+    stroke-width: 2;
+    marker-end: url(#arrow);
+}
+
+</style>
+
+</head>
+
+<body>
+
+
+<div class="header">
+
+    <h1>
+        Search Engine Analysis
+    </h1>
+
+    <a
+        href="/"
+        class="back-button"
+    >
+        Back to Search
+    </a>
+
+</div>
+
+
+<!-- TABLE 1 -->
+
+<div class="section">
+
+    <h2>
+        Table 1 - Relevance
+    </h2>
+
+    <p>
+        * TF =
+        Number of occurrences of term /
+        Total number of words in document
+    </p>
+
+    <p>
+        * IDF = log(N / DF)
+    </p>
+
+    <p>
+        * TF-IDF = TF x IDF
+    </p>
+
+    <p>
+        * Relevance =
+        Sum of TF-IDF values of query terms
+    </p>
+
+    <table id="relevanceTable">
+
+        <thead>
+
+            <tr>
+
+                <th>Page</th>
+                <th>Term</th>
+                <th>TF</th>
+                <th>IDF</th>
+                <th>TF-IDF</th>
+                <th>Relevance</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody></tbody>
+
+    </table>
+
+</div>
+
+
+<!-- TABLE 2 -->
+
+<div class="section">
+
+    <h2>
+        Table 2 - PageRank
+    </h2>
+
+    <p>
+        * PR(i) =
+        (1-d)/N +
+        d x SUM(PR(j)/L(j))
+    </p>
+
+    <p>
+        * Normalized PageRank =
+        PR / Maximum PR
+    </p>
+
+    <table id="pageRankTable">
+
+        <thead>
+
+            <tr>
+
+                <th>Page</th>
+                <th>PageRank</th>
+                <th>Normalized PageRank</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody></tbody>
+
+    </table>
+
+</div>
+
+
+<!-- PAGE RANK GRAPH -->
+
+<div class="section">
+
+    <h2>
+        PageRank Graph
+    </h2>
+
+    <p>
+        This directed graph represents the document
+        connections used to calculate PageRank.
+    </p>
+
+    <svg
+        id="graph"
+        viewBox="0 0 800 500"
+    >
+
+        <defs>
+
+            <marker
+                id="arrow"
+                markerWidth="10"
+                markerHeight="10"
+                refX="10"
+                refY="5"
+                orient="auto"
+            >
+
+                <path
+                    d="M0,0 L10,5 L0,10 z"
+                    fill="#555"
+                />
+
+            </marker>
+
+        </defs>
+
+    </svg>
+
+</div>
+
+
+<!-- TABLE 3 -->
+
+<div class="section">
+
+    <h2>
+        Table 3 - Final Ranking
+    </h2>
+
+    <p>
+        * Final Score =
+        0.7 x Relevance +
+        0.3 x Normalized PageRank
+    </p>
+
+    <table id="finalTable">
+
+        <thead>
+
+            <tr>
+
+                <th>Page</th>
+                <th>Relevance</th>
+                <th>Normalized PageRank</th>
+                <th>Final Score</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody></tbody>
+
+    </table>
+
+</div>
+
+
+<script>
+
+async function loadAnalysis() {
+
+    const query =
+        localStorage.getItem(
+            "searchQuery"
+        ) || "";
+
+
+    if (!query) {
+
+        window.location.href = "/";
+
+        return;
+
+    }
+
+
+    const searchResponse =
+        await fetch(
+            "/search?q=" +
+            encodeURIComponent(query)
+        );
+
+
+    const results =
+        await searchResponse.json();
+
+
+    const analysisResponse =
+        await fetch(
+            "/analysis-data"
+        );
+
+
+    const analysis =
+        await analysisResponse.json();
+
+
+    const relevanceTable =
+        document.querySelector(
+            "#relevanceTable tbody"
+        );
+
+
+    const pageRankTable =
+        document.querySelector(
+            "#pageRankTable tbody"
+        );
+
+
+    const finalTable =
+        document.querySelector(
+            "#finalTable tbody"
+        );
+
+
+    /*
+        TABLE 1
+    */
+
+    const relevanceResults =
+        [...results].sort(
+            (a, b) =>
+                b.relevance -
+                a.relevance
+        );
+
+
+    relevanceResults.forEach(
+        result => {
+
+            const terms =
+                Object.entries(
+                    result.terms
+                );
+
+
+            terms.forEach(
+                ([word, values]) => {
+
+                    relevanceTable.innerHTML += `
+
+                        <tr>
+
+                            <td>
+                                ${result.page}
+                            </td>
+
+                            <td>
+                                ${word}
+                            </td>
+
+                            <td>
+                                ${values.tf.toFixed(6)}
+                            </td>
+
+                            <td>
+                                ${values.idf.toFixed(6)}
+                            </td>
+
+                            <td>
+                                ${values.tfidf.toFixed(6)}
+                            </td>
+
+                            <td>
+                                ${result.relevance.toFixed(6)}
+                            </td>
+
+                        </tr>
+
+                    `;
+
+                }
+            );
+
+        }
+    );
+
+
+    /*
+        TABLE 2
+    */
+
+    analysis.page_rank.forEach(
+        row => {
+
+            pageRankTable.innerHTML += `
+
+                <tr>
+
+                    <td>
+                        ${row.page}
+                    </td>
+
+                    <td>
+                        ${row.pagerank.toFixed(6)}
+                    </td>
+
+                    <td>
+                        ${row.normalized.toFixed(6)}
+                    </td>
+
+                </tr>
+
+            `;
+
+        }
+    );
+
+
+    /*
+        TABLE 3
+    */
+
+    const finalResults =
+        [...results].sort(
+            (a, b) =>
+                b.final_score -
+                a.final_score
+        );
+
+
+    finalResults.forEach(
+        result => {
+
+            finalTable.innerHTML += `
+
+                <tr>
+
+                    <td>
+                        ${result.page}
+                    </td>
+
+                    <td>
+                        ${result.relevance.toFixed(6)}
+                    </td>
+
+                    <td>
+                        ${result.normalized_pagerank.toFixed(6)}
+                    </td>
+
+                    <td>
+                        ${result.final_score.toFixed(6)}
+                    </td>
+
+                </tr>
+
+            `;
+
+        }
+    );
+
+
+    /*
+        PAGE RANK GRAPH
+    */
+
+    drawGraph(
+        analysis.graph
+    );
+
+}
+
+
+function drawGraph(graph) {
+
+    const svg =
+        document.getElementById(
+            "graph"
+        );
+
+
+    const pages =
+        Object.keys(graph);
+
+
+    const positions = {
+
+        P1: {x: 150, y: 120},
+        P2: {x: 400, y: 80},
+        P3: {x: 650, y: 120},
+        P4: {x: 300, y: 350},
+        P5: {x: 550, y: 350}
+
+    };
+
+
+    /*
+        Draw edges
+    */
+
+    pages.forEach(
+        source => {
+
+            graph[source].forEach(
+                target => {
+
+                    const start =
+                        positions[source];
+
+                    const end =
+                        positions[target];
+
+
+                    if (!start || !end) {
+                        return;
+                    }
+
+
+                    const line =
+                        document.createElementNS(
+                            "http://www.w3.org/2000/svg",
+                            "line"
+                        );
+
+
+                    line.setAttribute(
+                        "x1",
+                        start.x
+                    );
+
+                    line.setAttribute(
+                        "y1",
+                        start.y
+                    );
+
+                    line.setAttribute(
+                        "x2",
+                        end.x
+                    );
+
+                    line.setAttribute(
+                        "y2",
+                        end.y
+                    );
+
+                    line.setAttribute(
+                        "class",
+                        "edge"
+                    );
+
+
+                    svg.appendChild(
+                        line
+                    );
+
+                }
+            );
+
+        }
+    );
+
+
+    /*
+        Draw nodes
+    */
+
+    pages.forEach(
+        page => {
+
+            const position =
+                positions[page];
+
+
+            if (!position) {
+                return;
+            }
+
+
+            const circle =
+                document.createElementNS(
+                    "http://www.w3.org/2000/svg",
+                    "circle"
+                );
+
+
+            circle.setAttribute(
+                "cx",
+                position.x
+            );
+
+            circle.setAttribute(
+                "cy",
+                position.y
+            );
+
+            circle.setAttribute(
+                "r",
+                35
+            );
+
+            circle.setAttribute(
+                "class",
+                "node"
+            );
+
+
+            svg.appendChild(
+                circle
+            );
+
+
+            const text =
+                document.createElementNS(
+                    "http://www.w3.org/2000/svg",
+                    "text"
+                );
+
+
+            text.setAttribute(
+                "x",
+                position.x
+            );
+
+            text.setAttribute(
+                "y",
+                position.y
+            );
+
+            text.setAttribute(
+                "class",
+                "node-text"
+            );
+
+            text.textContent =
+                page;
+
+
+            svg.appendChild(
+                text
+            );
+
+        }
+    );
+
+}
+
+
+loadAnalysis();
+
+</script>
+
+</body>
+
+</html>
+
+
