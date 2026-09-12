@@ -53,13 +53,6 @@ th {
     color: white;
 }
 
-.formula {
-    background: #f1f1f1;
-    padding: 12px;
-    margin-top: 10px;
-    font-family: "Courier New", monospace;
-}
-
 #graph {
     width: 100%;
     height: 500px;
@@ -81,7 +74,7 @@ th {
 
 .edge {
     stroke: #555;
-    stroke-width: 2;
+    stroke-width: 2.5;
     marker-end: url(#arrow);
 }
 
@@ -91,189 +84,181 @@ th {
 
 <body>
 
-
 <div class="header">
 
-    <h1>
-        Search Engine Analysis
-    </h1>
+<h1>
+Search Engine Analysis
+</h1>
 
-    <a
-        href="/"
-        class="back-button"
-    >
-        Back to Search
-    </a>
-
-</div>
-
-
-<!-- TABLE 1 -->
-
-<div class="section">
-
-    <h2>
-        Table 1 - Relevance
-    </h2>
-
-    <p>
-        * TF =
-        Number of occurrences of term /
-        Total number of words in document
-    </p>
-
-    <p>
-        * IDF = log(N / DF)
-    </p>
-
-    <p>
-        * TF-IDF = TF x IDF
-    </p>
-
-    <p>
-        * Relevance =
-        Sum of TF-IDF values of query terms
-    </p>
-
-    <table id="relevanceTable">
-
-        <thead>
-
-            <tr>
-
-                <th>Page</th>
-                <th>Term</th>
-                <th>TF</th>
-                <th>IDF</th>
-                <th>TF-IDF</th>
-                <th>Relevance</th>
-
-            </tr>
-
-        </thead>
-
-        <tbody></tbody>
-
-    </table>
+<a
+    href="/"
+    class="back-button"
+>
+Back to Search
+</a>
 
 </div>
 
 
-<!-- TABLE 2 -->
-
 <div class="section">
 
-    <h2>
-        Table 2 - PageRank
-    </h2>
+<h2>
+Table 1 - Relevance
+</h2>
 
-    <p>
-        * PR(i) =
-        (1-d)/N +
-        d x SUM(PR(j)/L(j))
-    </p>
+<p>
+* TF =
+Number of occurrences of term /
+Total number of words in document
+</p>
 
-    <p>
-        * Normalized PageRank =
-        PR / Maximum PR
-    </p>
+<p>
+* IDF = log(N / DF)
+</p>
 
-    <table id="pageRankTable">
+<p>
+* TF-IDF = TF x IDF
+</p>
 
-        <thead>
+<p>
+* Relevance =
+Sum of TF-IDF values of query terms
+</p>
 
-            <tr>
+<table id="relevanceTable">
 
-                <th>Page</th>
-                <th>PageRank</th>
-                <th>Normalized PageRank</th>
+<thead>
 
-            </tr>
+<tr>
 
-        </thead>
+<th>Page</th>
+<th>Term</th>
+<th>TF</th>
+<th>IDF</th>
+<th>TF-IDF</th>
+<th>Relevance</th>
 
-        <tbody></tbody>
+</tr>
 
-    </table>
+</thead>
+
+<tbody></tbody>
+
+</table>
 
 </div>
 
 
-<!-- PAGE RANK GRAPH -->
-
 <div class="section">
 
-    <h2>
-        PageRank Graph
-    </h2>
+<h2>
+Table 2 - PageRank
+</h2>
 
-    <p>
-        This directed graph represents the document
-        connections used to calculate PageRank.
-    </p>
+<p>
+* PR(i) =
+(1-d)/N +
+d x SUM(PR(j)/L(j))
+</p>
 
-    <svg
-        id="graph"
-        viewBox="0 0 800 500"
-    >
+<p>
+* Normalized PageRank =
+PR / Maximum PR
+</p>
 
-        <defs>
+<table id="pageRankTable">
 
-            <marker
-                id="arrow"
-                markerWidth="10"
-                markerHeight="10"
-                refX="10"
-                refY="5"
-                orient="auto"
-            >
+<thead>
 
-                <path
-                    d="M0,0 L10,5 L0,10 z"
-                    fill="#555"
-                />
+<tr>
 
-            </marker>
+<th>Page</th>
+<th>PageRank</th>
+<th>Normalized PageRank</th>
 
-        </defs>
+</tr>
 
-    </svg>
+</thead>
+
+<tbody></tbody>
+
+</table>
 
 </div>
 
 
-<!-- TABLE 3 -->
+<div class="section">
+
+<h2>
+PageRank Graph
+</h2>
+
+<p>
+This directed graph represents the document
+connections used to calculate PageRank.
+</p>
+
+<svg
+    id="graph"
+    viewBox="0 0 800 500"
+>
+
+<defs>
+
+<marker
+    id="arrow"
+    markerWidth="12"
+    markerHeight="12"
+    refX="10"
+    refY="6"
+    orient="auto"
+    markerUnits="strokeWidth"
+>
+
+<path
+    d="M0,0 L12,6 L0,12 Z"
+    fill="#555"
+/>
+
+</marker>
+
+</defs>
+
+</svg>
+
+</div>
+
 
 <div class="section">
 
-    <h2>
-        Table 3 - Final Ranking
-    </h2>
+<h2>
+Table 3 - Final Ranking
+</h2>
 
-    <p>
-        * Final Score =
-        0.7 x Relevance +
-        0.3 x Normalized PageRank
-    </p>
+<p>
+* Final Score =
+0.7 x Relevance +
+0.3 x Normalized PageRank
+</p>
 
-    <table id="finalTable">
+<table id="finalTable">
 
-        <thead>
+<thead>
 
-            <tr>
+<tr>
 
-                <th>Page</th>
-                <th>Relevance</th>
-                <th>Normalized PageRank</th>
-                <th>Final Score</th>
+<th>Page</th>
+<th>Relevance</th>
+<th>Normalized PageRank</th>
+<th>Final Score</th>
 
-            </tr>
+</tr>
 
-        </thead>
+</thead>
 
-        <tbody></tbody>
+<tbody></tbody>
 
-    </table>
+</table>
 
 </div>
 
@@ -336,10 +321,6 @@ async function loadAnalysis() {
         );
 
 
-    /*
-        TABLE 1
-    */
-
     const relevanceResults =
         [...results].sort(
             (a, b) =>
@@ -399,10 +380,6 @@ async function loadAnalysis() {
     );
 
 
-    /*
-        TABLE 2
-    */
-
     analysis.page_rank.forEach(
         row => {
 
@@ -429,10 +406,6 @@ async function loadAnalysis() {
         }
     );
 
-
-    /*
-        TABLE 3
-    */
 
     const finalResults =
         [...results].sort(
@@ -473,10 +446,6 @@ async function loadAnalysis() {
     );
 
 
-    /*
-        PAGE RANK GRAPH
-    */
-
     drawGraph(
         analysis.graph
     );
@@ -508,7 +477,7 @@ function drawGraph(graph) {
 
 
     /*
-        Draw edges
+        Draw directed edges first
     */
 
     pages.forEach(
@@ -529,6 +498,44 @@ function drawGraph(graph) {
                     }
 
 
+                    const dx =
+                        end.x - start.x;
+
+                    const dy =
+                        end.y - start.y;
+
+                    const distance =
+                        Math.sqrt(
+                            dx * dx +
+                            dy * dy
+                        );
+
+
+                    const radius = 35;
+
+
+                    const startX =
+                        start.x +
+                        (dx / distance) *
+                        radius;
+
+                    const startY =
+                        start.y +
+                        (dy / distance) *
+                        radius;
+
+
+                    const endX =
+                        end.x -
+                        (dx / distance) *
+                        radius;
+
+                    const endY =
+                        end.y -
+                        (dy / distance) *
+                        radius;
+
+
                     const line =
                         document.createElementNS(
                             "http://www.w3.org/2000/svg",
@@ -538,22 +545,22 @@ function drawGraph(graph) {
 
                     line.setAttribute(
                         "x1",
-                        start.x
+                        startX
                     );
 
                     line.setAttribute(
                         "y1",
-                        start.y
+                        startY
                     );
 
                     line.setAttribute(
                         "x2",
-                        end.x
+                        endX
                     );
 
                     line.setAttribute(
                         "y2",
-                        end.y
+                        endY
                     );
 
                     line.setAttribute(
