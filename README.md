@@ -45,14 +45,35 @@ It searches five medical research pages using **TF-IDF relevance** and **PageRan
 
     TF = Term occurrences / Total words in document
 
+    DF = Number of documents containing the term
+
     IDF = log(N / DF)
 
     TF-IDF = TF × IDF
 
-    Relevance = Sum of TF-IDF values
+    Relevance = Sum of TF-IDF values of query terms
 
+    PageRank:
+    PR(i) = (1 - d) / N + d × Σ(PR(j) / L(j))
+
+    where j → i
+
+    d = 0.85
+
+    N = Total number of pages
+
+    L(j) = Number of outgoing links from page j
+
+    Initial PageRank:
+    PR(i) = 1 / N
+
+    Convergence condition:
+    max |PR_new - PR_old| < 0.0001
+
+    Normalized PageRank:
     Normalized PageRank = PageRank / Maximum PageRank
 
+    Final Score:
     Final Score = 0.7 × Relevance + 0.3 × Normalized PageRank
 
 ## Run Locally
